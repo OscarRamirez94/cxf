@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+    xmlns="http://www.springframework.org/schema/beans"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns:camel="http://camel.apache.org/schema/spring"
+xmlns:cxf="http://camel.apache.org/schema/cxf" xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+	 http://camel.apache.org/schema/cxf http://camel.apache.org/schema/cxf/camel-cxf.xsd
+       http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd ">
+
+	  <cxf:cxfEndpoint id="myendpoint" address="http://services.aonaware.com/DictService/DictService.asmx" 
+		wsdlURL="http://services.aonaware.com/DictService/DictService.asmx?WSDL"
+		serviceName="s:DictService"
+		endpointName="s:DictServiceSoap"
+   		xmlns:s="http://services.aonaware.com/webservices/">
+		<cxf:properties>
+        		<entry key="dataFormat" value="MESSAGE"/>
+			 <entry key="setDefaultBus" value="true"/>
+    		</cxf:properties>
+	</cxf:cxfEndpoint>	
+
+
+    <camelContext xmlns="http://camel.apache.org/schema/spring" 
+    	xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"
+    	xmlns:s="http://services.aonaware.com/webservices/" >
+
+        <route >
+            <from uri="file:/home/becario03/Documentos/input/entrada" />
+            <to uri="cxf:bean:myendpoint" />
+		   <setBody>
+		   <<xpath>/soap:Envelope/soap:Body/s:DefineInDictResponse/s:DefineInDictResult/s:Definitions/s:Definition/s:WordDefinition/text()
+		   </xpath></setBody>
+		   
+           <to uri="file:/home/becario03/Documentos/output?fileName=salida.txt" /> 	
+			
+        </route>
+    </camelContext>
+</beans>
