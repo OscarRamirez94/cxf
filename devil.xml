@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
-  <soap:Body>
-    <DefineInDict xmlns="http://services.aonaware.com/webservices/">
-      <dictId>devils</dictId>
-      <word>SATAN</word>
-    </DefineInDict>
-  </soap:Body>
-</soap:Envelope>
