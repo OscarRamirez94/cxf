@@ -1,0 +1,10 @@
+ <choice>
+            		<when>
+		   	  <simple>${body} starts with='H'</simple>
+		   		<to uri="file:///home/bacario08/Documentos/texto/hombres.txt"/>
+ 			</when>
+			<when>
+		   	  <simple>${body} starts with='M'</simple>
+		   		<to uri="file:///home/bacario08/Documentos/texto/mujeres.txt"/>
+ 			</when>
+		  </choice>
