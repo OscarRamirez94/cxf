@@ -31,12 +31,17 @@ xmlns:cxf="http://camel.apache.org/schema/cxf" xmlns:jaxrs="http://cxf.apache.or
         <route >
             <from uri="file:/home/becario03/Documentos/input/entrada" />
             <to uri="cxf:bean:myendpoint" />
-		   <setBody>
-		   <<xpath>/soap:Envelope/soap:Body/s:DefineInDictResponse/s:DefineInDictResult/s:Definitions/s:Definition/s:WordDefinition/text()
-		   </xpath></setBody>
-		   
-           <to uri="file:/home/becario03/Documentos/output?fileName=salida.txt" /> 	
-			
+            <setHeader headerName="CamelFileName">
+		<xpath >/soap:Envelope/soap:Body/s:DefineInDictResponse/s:DefineInDictResult/s:Definitions/s:Definition/s:Word/text()</xpath>
+            </setHeader>
+
+            <setBody>
+		<xpath>
+		/soap:Envelope/soap:Body/s:DefineInDictResponse/s:DefineInDictResult/s:Definitions/s:Definition/s:WordDefinition/text()
+		</xpath>
+            </setBody>
+	
+           <to uri="file:///home/becario03/Documentos/output?fileName=${file:name}.txt"/>	
         </route>
     </camelContext>
 </beans>
